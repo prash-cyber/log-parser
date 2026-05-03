@@ -1,0 +1,10 @@
+May 01 21:30:05 web-server-01 sshd[15421]: Failed password for invalid user guest from 192.168.1.105 port 54322 ssh2
+May 01 21:30:07 web-server-01 sshd[15421]: Failed password for invalid user guest from 192.168.1.105 port 54324 ssh2
+May 01 21:30:09 web-server-01 sshd[15421]: Failed password for invalid user guest from 192.168.1.105 port 54326 ssh2
+May 01 21:30:11 web-server-01 sshd[15421]: Failed password for invalid user guest from 192.168.1.105 port 54328 ssh2
+May 01 21:30:13 web-server-01 sshd[15421]: Failed password for invalid user guest from 192.168.1.105 port 54330 ssh2
+May 01 21:31:45 web-server-01 sshd[16110]: Failed password for root from 172.16.0.42 port 49152 ssh2
+May 01 21:31:46 web-server-01 sshd[16110]: Failed password for root from 172.16.0.42 port 49154 ssh2
+May 01 21:31:48 web-server-01 sshd[16110]: Failed password for root from 172.16.0.42 port 49156 ssh2
+May 01 21:35:00 web-server-01 sshd[16500]: Accepted password for admin from 10.0.0.15 port 33211 ssh2
+May 01 21:40:10 web-server-01 sshd[17001]: Failed password for root from 172.16.0.42 port 49200 ssh2
