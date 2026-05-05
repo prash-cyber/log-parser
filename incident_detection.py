@@ -5,12 +5,19 @@
                 to login in a dictionary. I used simple list slicing to extract the source IP, source port and
                 the user they tried to hack into, without regular expression for this simple program. 
 
+                The program now uses regex for robust pattern matching.
+
                 Using that information, it attempts to see if it is a brute force attack.
 '''
+import matplotlib.pyplot as plt
+from collections import defaultdict
+import re
 
 def main():
     log_location = "log.txt"
-    log_details = read_log(log_location)
+    #log_details = read_log_no_regex(log_location)
+
+    log_details = read_log_regex(log_location)
 
     # display info
     view_attacker(log_details)
@@ -20,7 +27,16 @@ def main():
 
 # displays total unique information
 def view_attacker(results):
-    print(f"Total incidence results (IP: failed logins): {results}\n")
+    attacker_ip = list(results.keys())
+    failed_logins = list(results.values())
+
+    plt.bar(attacker_ip, failed_logins, color='red')
+    plt.xlabel("Attacker IP")
+    plt.ylabel("Number of Failed Logins")
+    plt.title("Failed Login Attempts by Attacker IP")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
 
 # detects brute force attempts by the number of failed logins
 def detect_brute_force(results):
@@ -31,7 +47,7 @@ def detect_brute_force(results):
             printed_result = True
 
 # parse the log file 
-def read_log(log_location):
+def read_log_no_regex(log_location):
     log_line = open(log_location, "r")
     results = {}
     for line in log_line:
@@ -59,6 +75,23 @@ def read_log(log_location):
                 results.update({src_ip: current_count +1})
 
     log_line.close()
+    return results
+
+# This function uses regex for robust pattern matching
+def read_log_regex(log_location):
+    # Line starting with 'Failed password for ' dont capture any word even if it exists, capture the first non-space word which 
+    # is the victim then the IP
+    pattern = r"Failed password for (?:.* )?(\S+) from (\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3})"
+    # this automatically initializes the count to 0 for any new IP
+    results = defaultdict(int)
+    # let python open and close the file automatically
+    with open(log_location, "r") as log_line:
+        for line in log_line:
+            match = re.search(pattern, line)
+            if match:
+                victim_user = match.group(1)
+                attacker_ip = match.group(2)
+                results[attacker_ip] += 1
     return results
 
 main()
